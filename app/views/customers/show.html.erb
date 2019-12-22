@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<dl>
+  <dt>
+    Name:
+  </dt>
+  <dd>
+    <%=@customer.name %>
+  </dd>
+  <dt>
+    Surname:
+  </dt>
+  <dd>
+    <%=@customer.surname %>
+  </dd>
+  <dt>
+    City:
+  </dt>
+  <dd>
+    <%=link_to @customer.city.name, @customer.city %>
+  </dd>
+</dl>
+
+<h2>Numbers:</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Number:</th>
+    <th colspan="3">Actions:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @customer.numbers.each do |number|%>
+    <tr>
+      <td><%= number.number %></td>
+      <td><%= link_to 'View', number %></td>
+      <% if  admin_user_signed_in? %>
+        <td><%= link_to 'Edit', edit_number_path(number) %></td>
+        <td><%= link_to 'Delete', number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% if  admin_user_signed_in? %>
+  <%= link_to 'Edit', edit_customer_path(@customer) %> |
+<% end %>
+<%= link_to 'All customers', customers_path %>

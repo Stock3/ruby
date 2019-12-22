@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Numbers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Customer</th>
+      <th>Plan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @numbers.each do |number| %>
+      <tr>
+        <td><%= number.number %></td>
+        <td><%= number.customer.name %> <%= number.customer.surname %></td>
+        <td><%= number.plan.name %></td>
+        <td><%= link_to 'View', number %></td>
+        <% if  admin_user_signed_in? %>
+          <td><%= link_to 'Edit', edit_number_path(number) %></td>
+          <td><%= link_to 'Delete', number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if  admin_user_signed_in? %>
+  <%= link_to 'New Number', new_number_path %>
+<% end %>

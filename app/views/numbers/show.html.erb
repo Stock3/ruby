@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<dl>
+  <dt>
+    Name:
+  </dt>
+  <dd>
+    <%=@number.number %>
+  </dd>
+  <dt>
+    Customer:
+  </dt>
+  <dd>
+    <%=link_to @number.customer.name + ' ' + @number.customer.surname, @number.customer %>
+  </dd>
+  <dt>
+    Plan:
+  </dt>
+  <dd>
+    <%=link_to @number.plan.name, @number.plan %>
+  </dd>
+</dl>
+
+<h2>Incoming calls:</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Caller:</th>
+    <th>Time:</th>
+    <th>Length:</th>
+    <th colspan="3">Actions:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @number.in_calls.each do |call|%>
+    <tr>
+      <td><%= call.source_number.number %></td>
+      <td><%= call.time %></td>
+      <td><%= call.call_length %></td>
+      <td><%= link_to 'View', call %></td>
+      <td><%= link_to 'Edit', edit_call_path(call) %></td>
+      <td><%= link_to 'Delete', call, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h2>Outgoing calls:</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Callee:</th>
+    <th>Time:</th>
+    <th>Length:</th>
+    <th colspan="3">Actions:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @number.out_calls.each do |call|%>
+    <tr>
+      <td><%= call.source_number.number %></td>
+      <td><%= call.time %></td>
+      <td><%= call.call_length %></td>
+      <td><%= link_to 'View', call %></td>
+      <td><%= link_to 'Edit', edit_call_path(call) %></td>
+      <td><%= link_to 'Delete', call, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% if  admin_user_signed_in? %>
+  <%= link_to 'Edit', edit_number_path(@number) %> |
+<% end %>
+<%= link_to 'All numbers', numbers_path %>
